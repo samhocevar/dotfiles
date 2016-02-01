@@ -1,0 +1,20 @@
+# /etc/zsh/zlogin: system-wide .zlogin file for zsh(1).
+#
+# This file is sourced only for login shells. It
+# should contain commands that should be executed only
+# in login shells. It should be used to set the terminal
+# type and run a series of external commands (fortune,
+# msgs, from, etc.)
+#
+# Global Order: zshenv, zprofile, zshrc, zlogin
+
+# 0.1.0 by Sam Hocevar - 4 Oct 1998
+# 0.2 by Sam Hocevar - 26 Feb 2011
+
+# Give some information about the system
+uname -a
+uptime
+
+# Accept messages from other users
+mesg y
+
