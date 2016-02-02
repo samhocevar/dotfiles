@@ -8,13 +8,14 @@
 #
 # Global Order: zshenv, zprofile, zshrc, zlogin
 
-# 0.1.0 by Sam Hocevar - 4 Oct 1998
-# 0.2 by Sam Hocevar - 26 Feb 2011
+# Copyright © 1998—2016 Sam Hocevar <sam@hocevar.net>
+# This file is free software. It comes without any warranty, to
+# the extent permitted by applicable law. You can redistribute it
+# and/or modify it under the terms of the Do What The Fuck You Want
+# to Public License, Version 2, as published by the WTFPL Task Force.
+# See http://www.wtfpl.net/ for more details.
 
 # Give some information about the system
 uname -a
 uptime
-
-# Accept messages from other users
-mesg y
 
