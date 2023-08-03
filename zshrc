@@ -6,28 +6,91 @@
 # to Public License, Version 2, as published by the WTFPL Task Force.
 # See http://www.wtfpl.net/ for more details.
 
-# Handle LS_COLORS
-if command -v dircolors >/dev/null; then
-    for f in ~/.dir_colors /etc/dir_colors; do
-        if [ -r "$f" ]; then
-            eval "$(dircolors "$f")"
-        fi
-    done
-fi
-
-# Handle PS_COLORS and TOP_COLORS (doesn't seem to work)
-if command -v pscol >/dev/null; then
-    eval "$(pscol)"
-fi
+##
+## Interactive shell environment
+##
 
 # Default editor: neovim if available, otherwise vim
 for f in nvim vim; do
-    if command -v "$f" >/dev/null; then
-        export VISUAL="$f"
-        export EDITOR="$f"
+    if which "${f}" >/dev/null; then
+        export VISUAL="${f}"
+        export EDITOR="${f}"
         break
     fi
 done
+
+# Use less instead of more
+if which less >/dev/null; then
+    export PAGER=less
+fi
+
+# Sometimes this is not defined
+export MAIL="/var/mail/${USERNAME}"
+
+##
+## Shell history
+##
+
+export HISTFILE="${HOME}/.history"
+export HISTORY=256
+export HISTSIZE=2048
+export SAVEHIST=2048
+
+setopt   share_history # Instead of append_history
+setopt   bang_hist
+setopt   csh_junkie_history
+unsetopt extended_history
+unsetopt hist_allow_clobber
+unsetopt hist_beep
+setopt   hist_ignore_all_dups # Could be just hist_ignore_dups
+unsetopt hist_ignore_space
+setopt   hist_no_store
+setopt   hist_verify
+
+##
+## Function aliases
+##
+
+# Better ls on foreign systems
+case "$(uname)" in
+    *BSD|SunOS)
+        if which gnuls >/dev/null; then
+            alias ls='gnuls --classify --tabsize=0 --literal --color=auto'
+        fi
+        ;;
+    *)
+        alias ls='ls --classify --tabsize=0 --literal --color=auto'
+        ;;
+esac
+
+# Better grep on foreign systems
+alias grep='grep --color=auto'
+if which rgrep >/dev/null; then
+    alias rgrep='rgrep --color=auto'
+else
+    alias rgrep='grep -R --color=auto'
+fi
+
+# Do not accidentally clobber files
+alias cp='cp -i'
+alias mv='mv -i'
+alias rm='rm -i'
+unsetopt clobber # Force ">|" instead of letting ">" clobber files
+
+# Always load the math library in bc
+alias bc='bc -l'
+
+# Make sure there is an alias for "vi"
+if ! which vi >/dev/null; then
+    alias vi=vim
+fi
+
+##
+## Terminal, prompt and colours
+##
+
+# Tell the terminal to handle 8-bit characters
+stty pass8 -ixon
 
 # Force emacs mode (to bypass ex mode detection from $VISUAL)
 bindkey -e
@@ -40,32 +103,14 @@ bindkey '^[[2~' overwrite-mode          # Insert
 bindkey '^[[5~' history-search-backward # PgUp
 bindkey '^[[6~' history-search-forward  # PgDn
 
-# Better ls and grep on foreign systems
-case "$UNAME" in
-    *BSD|SunOS)
-        if command -v gnuls >/dev/null; then
-            alias ls='gnuls --classify --tabsize=0 --literal --color=auto'
-        fi
-        ;;
-    *)
-        alias ls='ls --classify --tabsize=0 --literal --color=auto'
-        alias grep='grep --color=auto'
-        alias rgrep='rgrep --color=auto'
-        ;;
-esac
-
-# Do not accidentally clobber files
-alias cp='nice -20 cp -i'
-alias mv='nice -20 mv -i'
-alias rm='nice -20 rm -i'
-unsetopt clobber # Force >| instead of >
-
-# Always load the math library in bc
-alias bc='bc -l'
-
 # Full black & white prompt
 export PS1='%D{%d/%m} %T %n@%U%m%u %~%# '
 export PS2='> '
+
+# This is how we would activate a modern style prompt
+#autoload -Uz promptinit
+#promptinit
+#prompt fire
 
 # If inside a chroot, get /etc/hostname
 if [ "$(df / | awk 'END { print $1 }')" = '-' -a -f '/etc/hostname' ]; then
@@ -74,6 +119,25 @@ fi
 
 # Full color prompt
 export PS1='%{[36;1m%}%D{%d/%m}%{[0m%} %{[36;1m%}%T%{[0m%} %{[31;1m%}%n%{[0m[33;1m%}@%{[37;1m%}%m %{[32;1m%}%~%{[0m[33;1m%}%#%{[0m%} '
+
+# Handle LS_COLORS
+if which dircolors >/dev/null; then
+    for f in ~/.dir_colors /etc/dir_colors; do
+        if [ -r "$f" ]; then
+            eval "$(dircolors "$f")"
+            break
+        fi
+    done
+fi
+
+# Handle PS_COLORS and TOP_COLORS (doesn't seem to work)
+if which pscol >/dev/null; then
+    eval "$(pscol)"
+fi
+
+##
+## Various zsh options
+##
 
 # Misc options
 unsetopt beep # disable beep
@@ -96,31 +160,6 @@ setopt   numeric_glob_sort # sort foo3.txt before foo20.txt
 setopt   correct # correct commands
 unsetopt correct_all # do not correct command arguments
 
-# Completion
-setopt   always_to_end # completion sends cursor to EOL
-setopt   auto_list
-unsetopt auto_menu
-setopt   menu_complete
-setopt   auto_remove_slash
-setopt   complete_in_word
-setopt   glob_complete
-setopt   list_ambiguous
-unsetopt list_beep
-setopt   list_types
-unsetopt rec_exact
-
-# History
-setopt   append_history
-setopt   bang_hist
-setopt   csh_junkie_history
-unsetopt extended_history
-unsetopt hist_allow_clobber
-unsetopt hist_beep
-setopt   hist_ignore_dups
-unsetopt hist_ignore_space
-setopt   hist_no_store
-setopt   hist_verify
-
 # Directory navigation
 setopt auto_cd
 setopt auto_pushd
@@ -136,19 +175,27 @@ setopt   long_list_jobs
 setopt   monitor
 setopt   notify
 
-# History handling
-export HISTORY=256
-export SAVEHIST=2048
-export HISTSIZE=256
-export HISTFILE=$HOME/.history
-export MAIL=/var/mail/$USERNAME
+##
+## Completion
+##
 
-# Completion
+setopt   always_to_end # completion sends cursor to EOL
+setopt   auto_list
+unsetopt auto_menu
+setopt   menu_complete
+setopt   auto_remove_slash
+setopt   complete_in_word
+setopt   glob_complete
+setopt   list_ambiguous
+unsetopt list_beep
+setopt   list_types
+unsetopt rec_exact
+
 compctl -g '*(-/)' cd # allow links with '-'
 
-#
-# Windows-specific stuff (on MSYS2)
-#
+##
+## Windows-specific stuff (on MSYS2)
+##
 
 if [ "${OSTYPE}" = 'msys' ]; then
     # Slightly better version of "start" which acts on files and relative paths
@@ -169,13 +216,11 @@ if [ "${OSTYPE}" = 'msys' ]; then
         shift
         GIT_AUTHOR_DATE="$date" GIT_COMMITER_DATE="$date" "$@"
     }
-
-    # Maybe this could prove useful?
-    alias ls='ls --color=auto'
-    alias grep='grep --color=auto'
-    alias vi=vim
-    alias rgrep='grep -R'
 fi
+
+##
+## Utility functions
+##
 
 # Handy command to format man pages
 function mf() {

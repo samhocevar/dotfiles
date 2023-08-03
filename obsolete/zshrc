@@ -363,3 +363,6 @@ function fuck() {
         echo
     fi
 }
+
+# Flush the ARP table
+alias flusharp='arp -n | tail +2 | awk ''{ print $1 }'' | while read i ; do arp -d $i ; done'
