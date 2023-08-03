@@ -5,7 +5,8 @@ export GNOME_DISABLE_CRASH_DIALOG=1
 export KDE_DEBUG=1
 
 # Debian stuff
-export EMAIL='sho@debian.org'
+export EMAIL='sam@hocevar.net'
+export REPORTBUGEMAIL='sam@hocevar.net'
 export DEBEMAIL='sho@debian.org'
 export DEBFULLNAME='Sam Hocevar'
 export DEB_SIGN_KEYID=0xfffffffe

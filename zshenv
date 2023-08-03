@@ -26,12 +26,43 @@ export LESS_TERMCAP_so=$'\E[38;5;246m'    # begin standout-mode - info box
 export LESS_TERMCAP_ue=$'\E[0m'           # end underline
 export LESS_TERMCAP_us=$'\E[04;38;5;146m' # begin underline
 
-# Perforce
-export P4CONFIG=.p4config
-if command -w colordiff >/dev/null; then
-    export P4DIFF="colordiff -uw"
-fi
-
 # I want coredumps
 unlimit coredumpsize
 
+#
+# Reasonable defaults for some software
+#
+
+# Perforce
+if which p4 >/dev/null; then export P4CONFIG='.p4config' fi
+if which colordiff >/dev/null; then export P4DIFF='colordiff -uw' fi
+if which vim >/dev/null; then export P4EDITOR='vim' fi
+
+# Git
+export FILTER_BRANCH_SQUELCH_WARNING=1
+
+#
+# Windows-specific stuff (on MSYS2)
+#
+
+if [ "${OSTYPE}" = "msys" ]; then
+    # Starting from 2.39.1, Git for Windows behaves very well in MSYS2, so give it
+    # precedence over the MSYS2-installed one.
+    if [ -d "/c/Program Files/Git/bin" ]; then
+        PATH="/c/Program Files/Git/bin:${PATH}"
+    fi
+
+    # Avoid weird duplicates in the environment (causes crashes in many .NET programs)
+    unset temp
+    export temp
+    unset tmp
+    export tmp
+
+    # Fix Ansible SSH connection issues (https://github.com/geerlingguy/JJG-Ansible-Windows/issues/6)
+    ANSIBLE_SSH_ARGS='-o ControlMaster=no'
+    export ANSIBLE_SSH_ARGS
+
+    # Default to Unicode IO in Python
+    PYTHONIOENCODING=utf-8
+    export PYTHONIOENCODING
+fi
