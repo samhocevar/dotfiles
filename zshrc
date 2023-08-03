@@ -149,3 +149,33 @@ export MAIL=/var/mail/$USERNAME
 # Completion
 compctl -g '*(-/)' cd # allow links with '-'
 
+#
+# Windows-specific stuff (on MSYS2)
+#
+
+if [ "${OSTYPE}" = "msys" ]; then
+    # Slightly better version of "start" which acts on files and relative paths
+    start() {
+        if [ -d "$1" ]; then
+            (cd "$1" && command start .)
+        elif [ -f "$1" ]; then
+            (cd "$(dirname "$1")" && command start "$(basename "$1")")
+        else
+            command start "$@"
+        fi
+    }
+
+    # The faketime utility won’t work on Windows but we can at least emulate its
+    # behaviour with Git.
+    faketime() {
+        date="$(date -d "$1")"
+        shift
+        GIT_AUTHOR_DATE="$date" GIT_COMMITER_DATE="$date" "$@"
+    }
+}
+
+# Create a Go version tag from the current Git commit
+git-go-version() {
+    TZ=UTC git --no-pager show --quiet --abbrev=12 --date='format-local:%Y%m%d%H%M%S' --format="%cd-%h"
+}
+
