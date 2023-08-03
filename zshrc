@@ -63,22 +63,17 @@ unsetopt clobber # Force >| instead of >
 # Always load the math library in bc
 alias bc='bc -l'
 
-# Handy command to format man pages
-mf(){
-    tbl $* | nroff -mandoc | less -s
-}
-
 # Full black & white prompt
-export PS1="%D{%d/%m} %T %n@%U%m%u %~%# "
-export PS2="> "
+export PS1='%D{%d/%m} %T %n@%U%m%u %~%# '
+export PS2='> '
 
 # If inside a chroot, get /etc/hostname
-if test "$(df / | awk 'END { print $1 }')" = "-" -a -f /etc/hostname; then
+if [ "$(df / | awk 'END { print $1 }')" = '-' -a -f '/etc/hostname' ]; then
     HOST="$(< /etc/hostname)"
 fi
 
 # Full color prompt
-export PS1="%{[36;1m%}%D{%d/%m}%{[0m%} %{[36;1m%}%T%{[0m%} %{[31;1m%}%n%{[0m[33;1m%}@%{[37;1m%}%m %{[32;1m%}%~%{[0m[33;1m%}%#%{[0m%} "
+export PS1='%{[36;1m%}%D{%d/%m}%{[0m%} %{[36;1m%}%T%{[0m%} %{[31;1m%}%n%{[0m[33;1m%}@%{[37;1m%}%m %{[32;1m%}%~%{[0m[33;1m%}%#%{[0m%} '
 
 # Misc options
 unsetopt beep # disable beep
@@ -155,9 +150,9 @@ compctl -g '*(-/)' cd # allow links with '-'
 # Windows-specific stuff (on MSYS2)
 #
 
-if [ "${OSTYPE}" = "msys" ]; then
+if [ "${OSTYPE}" = 'msys' ]; then
     # Slightly better version of "start" which acts on files and relative paths
-    start() {
+    function start() {
         if [ -d "$1" ]; then
             (cd "$1" && command start .)
         elif [ -f "$1" ]; then
@@ -169,7 +164,7 @@ if [ "${OSTYPE}" = "msys" ]; then
 
     # The faketime utility won’t work on Windows but we can at least emulate its
     # behaviour with Git.
-    faketime() {
+    function faketime() {
         date="$(date -d "$1")"
         shift
         GIT_AUTHOR_DATE="$date" GIT_COMMITER_DATE="$date" "$@"
@@ -182,16 +177,21 @@ if [ "${OSTYPE}" = "msys" ]; then
     alias rgrep='grep -R'
 fi
 
+# Handy command to format man pages
+function mf() {
+    tbl $* | nroff -mandoc | less -s
+}
+
 # Create a Go version tag from the current Git commit
-git-go-version() {
-    TZ=UTC git --no-pager show --quiet --abbrev=12 --date='format-local:%Y%m%d%H%M%S' --format="%cd-%h"
+function git-go-version() {
+    TZ=UTC git --no-pager show --quiet --abbrev=12 --date='format-local:%Y%m%d%H%M%S' --format='%cd-%h'
 }
 
 # Generate passwords for generic usage
-genpass() {
+function genpass() {
     CHARS='a-zA-Z0-9\n'
     COUNT=30
-    if [ "$1" = "-h" ]; then CHARS='!-~\n'; shift; fi
+    if [ "$1" = '-h' ]; then CHARS='!-~\n'; shift; fi
     if [ -n "$1" -a "$1" -gt 5 -a "$1" -lt 200 ]; then COUNT="$1"; shift; fi
     tr -dc "${CHARS}" < /dev/urandom | grep '^.\{'"${COUNT}"'\}$' | head -n 10
 }
