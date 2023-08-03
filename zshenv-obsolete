@@ -1,0 +1,54 @@
+# Old zsh stuff that I stopped using
+
+# Change desktop app behaviour
+export GNOME_DISABLE_CRASH_DIALOG=1
+export KDE_DEBUG=1
+
+# Debian stuff
+export EMAIL='sho@debian.org'
+export DEBEMAIL='sho@debian.org'
+export DEBFULLNAME='Sam Hocevar'
+export DEB_SIGN_KEYID=0xfffffffe
+export DEBSIGN_KEYID=0xfffffffe # for debsign
+export DEB_BUILD_OPTIONS="$DEB_BUILD_OPTIONS parallel=4"
+
+# PS3 programming
+if [ -d "$HOME/ps3/cell" ]; then
+    export CELLSDK="$HOME/ps3/cell"
+    export CELL_SDK="$CELLSDK"
+    export SCE_PS3_ROOT="$CELLSDK"
+    export PATH="$PATH:$CELLSDK/host-linux/bin"
+    export PATH="$PATH:$CELLSDK/host-linux/ppu/bin"
+    export PATH="$PATH:$CELLSDK/host-linux/spu/bin"
+fi
+
+# Android programming
+if [ -d "$HOME/android/sdk" ]; then
+    export PATH="$PATH:$HOME/android/sdk/tools"
+    export PATH="$PATH:$HOME/android/sdk/platform-tools"
+    export ANDROID_NDK_ROOT="$HOME/android/ndk"
+    export PATH="$PATH:$ANDROID_NDK_ROOT"
+    export ANDROID_NDK_ARM_TOOLCHAIN="$HOME/android/arm-linux-androideabi"
+    export PATH="$PATH:$ANDROID_NDK_ARM_TOOLCHAIN/bin"
+fi
+
+# NaCl programming
+if [ -d "$HOME/nacl_sdk" ]; then
+    export NACL_SDK_ROOT="$HOME/nacl_sdk"
+    export PATH="$PATH:$NACL_SDK_ROOT/pepper_26/toolchain/linux_x86_newlib/bin"
+fi
+
+# RasPi programming
+if [ -d "$HOME/raspi" ]; then
+    export RASPI_SDK_ROOT="$HOME/raspi"
+    export PATH="$PATH:$RASPI_SDK_ROOT/tools/arm-bcm2708/arm-bcm2708hardfp-linux-gnueabi/bin"
+fi
+
+# More PATH stuff
+if [ -d "$HOME/emscripten" ]; then
+    export PATH="$HOME/emscripten:$PATH"
+fi
+if [ -d "$HOME/neovim" ]; then
+    export PATH="$PATH:$HOME/neovim/build/bin"
+fi
+

@@ -1,4 +1,5 @@
 # Copyright © 1999–2023 Sam Hocevar <sam@hocevar.net>
+#
 # This file is free software. It comes without any warranty, to
 # the extent permitted by applicable law. You can redistribute it
 # and/or modify it under the terms of the Do What The Fuck You Want
