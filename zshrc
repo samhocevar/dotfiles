@@ -12,7 +12,7 @@ if command -v dircolors >/dev/null; then
         if [ -r "$f" ]; then
             eval "$(dircolors "$f")"
         fi
-    fi
+    done
 fi
 
 # Handle PS_COLORS and TOP_COLORS (doesn't seem to work)
@@ -75,8 +75,7 @@ if test "$(df / | awk 'END { print $1 }')" = "-" -a -f /etc/hostname; then
 fi
 
 # Full color prompt
-export PS1="%{[36;1m%}%D{%d/%m}%{[0m%} %{[36;1m%}%T%{[0m%} %{[31;1m%}%n%{[0m[33;1m%}@%{[37;1m%}%m %{[32;1m%}%~%{[0m[33;1m%}
-%#%{[0m%} "
+export PS1="%{[36;1m%}%D{%d/%m}%{[0m%} %{[36;1m%}%T%{[0m%} %{[31;1m%}%n%{[0m[33;1m%}@%{[37;1m%}%m %{[32;1m%}%~%{[0m[33;1m%}%#%{[0m%} "
 
 # Misc options
 unsetopt beep # disable beep
@@ -172,7 +171,13 @@ if [ "${OSTYPE}" = "msys" ]; then
         shift
         GIT_AUTHOR_DATE="$date" GIT_COMMITER_DATE="$date" "$@"
     }
-}
+
+    # Maybe this could prove useful?
+    alias ls='ls --color=auto'
+    alias grep='grep --color=auto'
+    alias vi=vim
+    alias rgrep='grep -R'
+fi
 
 # Create a Go version tag from the current Git commit
 git-go-version() {

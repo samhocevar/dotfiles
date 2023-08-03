@@ -34,9 +34,9 @@ unlimit coredumpsize
 #
 
 # Perforce
-if which p4 >/dev/null; then export P4CONFIG='.p4config' fi
-if which colordiff >/dev/null; then export P4DIFF='colordiff -uw' fi
-if which vim >/dev/null; then export P4EDITOR='vim' fi
+if which p4 >/dev/null; then export P4CONFIG='.p4config'; fi
+if which colordiff >/dev/null; then export P4DIFF='colordiff -uw'; fi
+if which vim >/dev/null; then export P4EDITOR='vim'; fi
 
 # Git
 export FILTER_BRANCH_SQUELCH_WARNING=1
