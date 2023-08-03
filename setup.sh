@@ -9,7 +9,7 @@ for f in zshenv zshrc; do
         ln -sf "${SRC}" "${DST}"
         echo "[OK] ${DST}"
     else
-        echo "[!!] ${DST}: will not override"
+        echo "[!!] ${DST}: file exists, will not overwrite"
     fi
 done
 

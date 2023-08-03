@@ -60,6 +60,9 @@ alias mv='nice -20 mv -i'
 alias rm='nice -20 rm -i'
 unsetopt clobber # Force >| instead of >
 
+# Always load the math library in bc
+alias bc='bc -l'
+
 # Handy command to format man pages
 mf(){
     tbl $* | nroff -mandoc | less -s
@@ -184,3 +187,11 @@ git-go-version() {
     TZ=UTC git --no-pager show --quiet --abbrev=12 --date='format-local:%Y%m%d%H%M%S' --format="%cd-%h"
 }
 
+# Generate passwords for generic usage
+genpass() {
+    CHARS='a-zA-Z0-9\n'
+    COUNT=30
+    if [ "$1" = "-h" ]; then CHARS='!-~\n'; shift; fi
+    if [ -n "$1" -a "$1" -gt 5 -a "$1" -lt 200 ]; then COUNT="$1"; shift; fi
+    tr -dc "${CHARS}" < /dev/urandom | grep '^.\{'"${COUNT}"'\}$' | head -n 10
+}

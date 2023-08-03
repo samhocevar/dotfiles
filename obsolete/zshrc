@@ -346,6 +346,20 @@ hasxstack() {
 }
 
 # Stuff from my work at Don’t Nod
+alias make_package_npdrm="${CELL_SDK}/host-win32/bin/make_package_npdrm.exe"
+alias make_edata_npdrm="${CELL_SDK}/host-win32/bin/make_edata_npdrm.exe"
 alias nimp-upgrade='pip3 install --upgrade git+https://github.com/dontnod/nimp.git'
 scan-vnc() { ssh root@max nmap -oG - -p5900 --open 172.20.100.0/24 }
+distcc-make() {(
+    export PATH="/usr/lib/distcc:$PATH"
+    make $*
+)}
 
+# Kill all processes with the given name
+function fuck() {
+    if killall -9 "$2"; then
+        echo
+        echo " (╯°□°）╯︵$(echo "$2"|toilet -f term -F rotate)"
+        echo
+    fi
+}

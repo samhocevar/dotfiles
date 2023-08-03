@@ -66,3 +66,4 @@ if [ "${OSTYPE}" = "msys" ]; then
     PYTHONIOENCODING=utf-8
     export PYTHONIOENCODING
 fi
+
