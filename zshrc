@@ -198,6 +198,11 @@ compctl -g '*(-/)' cd # allow links with '-'
 ##
 
 if [ "${OSTYPE}" = 'msys' ]; then
+    # Some utilities are capitalised and this confuses the hell out of zsh autocorrect
+    for b in arp hostname netstat ping route tracert; do
+        alias "${b}=${b:u}.EXE"
+    done
+
     # Slightly better version of "start" which acts on files and relative paths
     function start() {
         if [ -d "$1" ]; then
