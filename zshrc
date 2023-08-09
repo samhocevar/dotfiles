@@ -7,6 +7,19 @@
 # See http://www.wtfpl.net/ for more details.
 
 ##
+## Handy function to update dotfiles in just one go
+##
+
+function update-dotfiles() {(
+    set -e
+    DOTFILES="$(realpath "$(dirname "$(readlink "${(%):-%x}")")")"
+    echo "[OK] Found dotfiles repository in ${DOTFILES}"
+    git -C "${DOTFILES}" pull
+    echo "[OK] Updated repository"
+    "${DOTFILES}/setup.sh"
+)}
+
+##
 ## Interactive shell environment
 ##
 
