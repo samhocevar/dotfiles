@@ -1,0 +1,8 @@
+
+# Very old alignment and word wrapping macros
+# Note: CR characters are intentional
+map ~ {v}! par 72j
+map # {v}! par 72
+map " {v}! par 79
+map & {v}! tr a-zA-Z n-za-mN-ZA-M
+

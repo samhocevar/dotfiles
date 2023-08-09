@@ -2,7 +2,7 @@
 
 DOTFILES="$(realpath $(dirname $(which $0 2>/dev/null || echo $0)))"
 
-for f in zshenv zshrc; do
+for f in vimrc zshenv zshrc; do
     SRC="${DOTFILES}/${f}" 
     DST="${HOME}/.${f}"
     if [ -L "${DST}" -o ! -e "${DST}" ]; then
