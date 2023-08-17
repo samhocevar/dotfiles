@@ -116,8 +116,18 @@ bindkey '^[[2~' overwrite-mode          # Insert
 bindkey '^[[5~' history-search-backward # PgUp
 bindkey '^[[6~' history-search-forward  # PgDn
 
+# Pick up an emoji to indicate the system; helpful on WSL where the same machine
+# runs both a Windows and a Linux kernel.
+case "$(uname)" in
+    Linux)  local logo='🐧' ;;
+    MINGW*) local logo='🪟' ;;
+    Darwin) local logo='🍎' ;;
+    *BSD)   local logo='😈' ;;
+    SunOS)  local logo='🌞' ;;
+esac
+
 # Full black & white prompt
-export PS1='%D{%d/%m} %T %n@%U%m%u %~%# '
+export PS1='%D{%d/%m} %T %n@%U%m%u${logo}%~%# '
 export PS2='> '
 
 # This is how we would activate a modern style prompt
@@ -131,7 +141,10 @@ if [ "$(df / | awk 'END { print $1 }')" = '-' -a -f '/etc/hostname' ]; then
 fi
 
 # Full color prompt
-export PS1='%{[36;1m%}%D{%d/%m}%{[0m%} %{[36;1m%}%T%{[0m%} %{[31;1m%}%n%{[0m[33;1m%}@%{[37;1m%}%m %{[32;1m%}%~%{[0m[33;1m%}%#%{[0m%} '
+export PS1="%{[36;1m%}%D{%d/%m}%{[0m%} %{[36;1m%}%T%{[0m%} %{[31;1m%}%n%{[0m[33;1m%}@%{[37;1m%}%m${logo}%{[32;1m%}%~%{[0m[33;1m%}%#%{[0m%} "
+
+# Clean up
+unset logo
 
 # Handle LS_COLORS
 if which dircolors >/dev/null; then
@@ -258,3 +271,11 @@ function genpass() {
     if [ -n "$1" -a "$1" -gt 5 -a "$1" -lt 200 ]; then COUNT="$1"; shift; fi
     tr -dc "${CHARS}" < /dev/urandom | grep '^.\{'"${COUNT}"'\}$' | head -n 10
 }
+
+##
+## Import local file if present
+##
+
+if [ -r ~/.zshrc.local ]; then
+    . ~/.zshrc.local
+fi
