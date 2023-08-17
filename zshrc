@@ -116,27 +116,29 @@ bindkey '^[[2~' overwrite-mode          # Insert
 bindkey '^[[5~' history-search-backward # PgUp
 bindkey '^[[6~' history-search-forward  # PgDn
 
-# Pick up an emoji to indicate the system; helpful on WSL where the same machine
-# runs both a Windows and a Linux kernel.
-case "$(uname)" in
-    MINGW*|MSYS*) local logo='🪟' ;;
-    Linux)  local logo='🐧' ;;
-    Darwin) local logo='🍎' ;;
-    *BSD)   local logo='😈' ;;
-    SunOS)  local logo='🌞' ;;
-esac
-
-# This is how we would activate a modern style prompt
-#autoload -Uz promptinit
-#promptinit
-#prompt fire
-
 # Full color prompt
-export PS1="%{%B%F{cyan}%}%D{%d/%m} %T %{%F{red}%}%n%{%F{yellow}%}@%{%F{white}%}%m%{%F{yellow}%}${logo} %{%F{green}%}%~%{%F{yellow}%}%#%{%f%b%} "
-export PS2='> '
+function set_prompt() {
+    # Pick up an emoji to indicate the system; helpful on WSL where the
+    # same machine runs both a Windows and a Linux kernel.
+    case "$(uname)" in
+        MINGW*|MSYS*) local logo='🪟' ;;
+        Linux)  local logo='🐧' ;;
+        Darwin) local logo='🍎' ;;
+        *BSD)   local logo='😈' ;;
+        SunOS)  local logo='🌞' ;;
+        *)      local logo=' ' ;;
+    esac
 
-# Clean up
-unset logo
+    # This is how we would activate a modern style prompt
+    #autoload -Uz promptinit
+    #promptinit
+    #prompt fire
+
+    export PS1="%{%B%F{cyan}%}%D{%d/%m} %T %{%F{red}%}%n%{%F{yellow}%}@%{%F{white}%}%m%{%F{yellow}%}${logo}%{%F{green}%}%~%{%F{yellow}%}%#%{%f%b%} "
+    export PS2='> '
+}
+
+set_prompt && unset -f set_prompt
 
 # Handle LS_COLORS
 if which dircolors >/dev/null; then
