@@ -46,12 +46,12 @@ export FILTER_BRANCH_SQUELCH_WARNING=1
 #
 
 if [ "${OSTYPE}" = "msys" ]; then
-    # Since at least 2.39, Git for Windows behaves very well in MSYS2, so give it
-    # precedence over the MSYS2-installed one.
-    # XXX: Disabled because that location also has bash.exe, which causes MSYS2
-    # scripts to misbehave.
-    #if [ -d "/c/Program Files/Git/bin" ]; then
-    #    PATH="/c/Program Files/Git/bin:${PATH}"
+    # Since at least 2.39, Git for Windows behaves very well in MSYS2, there is
+    # no reason to have the MSYS2 version which will have big performance issues
+    # FIXME: improve the following test by checking that both are in $PATH
+    #if [ -x "/c/Program Files/Git/bin/git.exe" -a -x "/usr/bin/git.exe" ]; then
+    #    echo "Warning: Windows and MSYS Git were both found; for best performance,"
+    #    echo "uninstall MSYS Git using: 'pacman -R git'"
     #fi
 
     # Avoid weird duplicates in the environment (leads to crashes in many .NET
