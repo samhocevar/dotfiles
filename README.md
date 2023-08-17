@@ -8,11 +8,14 @@ Nothing too fancy, but it’s made my life easier for the last 25 years.
 
 ```sh
 git clone https://github.com/samhocevar/dotfiles ~/.dotfiles
-~/dotfiles/setup.sh
+~/.dotfiles/setup.sh
 ```
 
 The installation script will create symbolic links if possible. Otherwise, the
 existing configuration files will be left untouched.
+
+When using an MSYS2 system, symbolic links must be enabled through the `MSYS`
+environment variable.
 
 ## Upgrades
 
