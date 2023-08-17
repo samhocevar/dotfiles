@@ -126,17 +126,14 @@ case "$(uname)" in
     SunOS)  local logo='🌞' ;;
 esac
 
-# Full black & white prompt
-export PS1='%D{%d/%m} %T %n@%U%m%u${logo}%~%# '
-export PS2='> '
-
 # This is how we would activate a modern style prompt
 #autoload -Uz promptinit
 #promptinit
 #prompt fire
 
 # Full color prompt
-export PS1="%{[36;1m%}%D{%d/%m}%{[0m%} %{[36;1m%}%T%{[0m%} %{[31;1m%}%n%{[0m[33;1m%}@%{[37;1m%}%m${logo}%{[32;1m%}%~%{[0m[33;1m%}%#%{[0m%} "
+export PS1="%{%B%F{cyan}%}%D{%d/%m} %T %{%F{red}%}%n%{%F{yellow}%}@%{%F{white}%}%m%{%F{yellow}%}${logo}%{%F{green}%}%~%{%F{yellow}%}%#%{%f%b%} "
+export PS2='> '
 
 # Clean up
 unset logo
