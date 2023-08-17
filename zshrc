@@ -14,7 +14,7 @@ function update-dotfiles() {(
     set -e
     DOTFILES="$(realpath "$(dirname "$(readlink "${(%):-%x}")")")"
     echo "[OK] Found dotfiles repository in ${DOTFILES}"
-    git -C "${DOTFILES}" pull
+    git -C "${DOTFILES}" pull --ff-only
     echo "[OK] Updated repository"
     "${DOTFILES}/setup.sh"
 )}
@@ -138,7 +138,7 @@ function set_prompt() {
     export PS2='> '
 }
 
-set_prompt && unset -f set_prompt
+set_prompt && unfunction set_prompt
 
 # Handle LS_COLORS
 if which dircolors >/dev/null; then
