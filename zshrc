@@ -135,11 +135,6 @@ export PS2='> '
 #promptinit
 #prompt fire
 
-# If inside a chroot, get /etc/hostname
-if [ "$(df / | awk 'END { print $1 }')" = '-' -a -f '/etc/hostname' ]; then
-    HOST="$(< /etc/hostname)"
-fi
-
 # Full color prompt
 export PS1="%{[36;1m%}%D{%d/%m}%{[0m%} %{[36;1m%}%T%{[0m%} %{[31;1m%}%n%{[0m[33;1m%}@%{[37;1m%}%m${logo}%{[32;1m%}%~%{[0m[33;1m%}%#%{[0m%} "
 
