@@ -119,8 +119,8 @@ bindkey '^[[6~' history-search-forward  # PgDn
 # Pick up an emoji to indicate the system; helpful on WSL where the same machine
 # runs both a Windows and a Linux kernel.
 case "$(uname)" in
+    MINGW*|MSYS*) local logo='🪟' ;;
     Linux)  local logo='🐧' ;;
-    MINGW*) local logo='🪟' ;;
     Darwin) local logo='🍎' ;;
     *BSD)   local logo='😈' ;;
     SunOS)  local logo='🌞' ;;
@@ -132,7 +132,7 @@ esac
 #prompt fire
 
 # Full color prompt
-export PS1="%{%B%F{cyan}%}%D{%d/%m} %T %{%F{red}%}%n%{%F{yellow}%}@%{%F{white}%}%m%{%F{yellow}%}${logo}%{%F{green}%}%~%{%F{yellow}%}%#%{%f%b%} "
+export PS1="%{%B%F{cyan}%}%D{%d/%m} %T %{%F{red}%}%n%{%F{yellow}%}@%{%F{white}%}%m%{%F{yellow}%}${logo} %{%F{green}%}%~%{%F{yellow}%}%#%{%f%b%} "
 export PS2='> '
 
 # Clean up
