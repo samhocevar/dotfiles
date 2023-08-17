@@ -46,13 +46,17 @@ export FILTER_BRANCH_SQUELCH_WARNING=1
 #
 
 if [ "${OSTYPE}" = "msys" ]; then
-    # Starting from 2.39.1, Git for Windows behaves very well in MSYS2, so give it
+    # Since at least 2.39, Git for Windows behaves very well in MSYS2, so give it
     # precedence over the MSYS2-installed one.
-    if [ -d "/c/Program Files/Git/bin" ]; then
-        PATH="/c/Program Files/Git/bin:${PATH}"
-    fi
+    # XXX: Disabled because that location also has bash.exe, which causes MSYS2
+    # scripts to misbehave.
+    #if [ -d "/c/Program Files/Git/bin" ]; then
+    #    PATH="/c/Program Files/Git/bin:${PATH}"
+    #fi
 
-    # Avoid weird duplicates in the environment (causes crashes in many .NET programs)
+    # Avoid weird duplicates in the environment (leads to crashes in many .NET
+    # programs because the environment is stored as a dictionary and duplicate
+    # keys cause exceptions)
     unset temp
     export temp
     unset tmp
