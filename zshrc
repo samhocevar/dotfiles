@@ -1,10 +1,16 @@
-# Copyright © 1999–2023 Sam Hocevar <sam@hocevar.net>
-#
-# This file is free software. It comes without any warranty, to
-# the extent permitted by applicable law. You can redistribute it
-# and/or modify it under the terms of the Do What The Fuck You Want
-# to Public License, Version 2, as published by the WTFPL Task Force.
-# See http://www.wtfpl.net/ for more details.
+##
+## This file is managed globally by update-dotfiles and may be overwritten
+## Local configuration should be stored in .zshrc.local
+## See https://github.com/samhocevar/dotfiles for more information
+##
+## Copyright © 1998–2023 Sam Hocevar <sam@hocevar.net>
+##
+## This file is free software. It comes without any warranty, to
+## the extent permitted by applicable law. You can redistribute it
+## and/or modify it under the terms of the Do What The Fuck You Want
+## to Public License, Version 2, as published by the WTFPL Task Force.
+## See http://www.wtfpl.net/ for more details.
+##
 
 ##
 ## Handy function to update dotfiles in just one go

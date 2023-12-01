@@ -1,10 +1,16 @@
-# Copyright © 1998–2023 Sam Hocevar <sam@hocevar.net>
-#
-# This file is free software. It comes without any warranty, to
-# the extent permitted by applicable law. You can redistribute it
-# and/or modify it under the terms of the Do What The Fuck You Want
-# to Public License, Version 2, as published by the WTFPL Task Force.
-# See http://www.wtfpl.net/ for more details.
+##
+## This file is managed globally by update-dotfiles and may be overwritten
+## Local configuration should be stored in .zshenv.local
+## See https://github.com/samhocevar/dotfiles for more information
+##
+## Copyright © 1998–2023 Sam Hocevar <sam@hocevar.net>
+##
+## This file is free software. It comes without any warranty, to
+## the extent permitted by applicable law. You can redistribute it
+## and/or modify it under the terms of the Do What The Fuck You Want
+## to Public License, Version 2, as published by the WTFPL Task Force.
+## See http://www.wtfpl.net/ for more details.
+##
 
 # Proper alphasort
 # Nicer messages than C/POSIX (apostrophes etc.)
@@ -57,10 +63,8 @@ if [ "${OSTYPE}" = "msys" ]; then
     # Avoid weird duplicates in the environment (leads to crashes in many .NET
     # programs because the environment is stored as a dictionary and duplicate
     # keys cause exceptions)
-    unset temp
-    export temp
-    unset tmp
-    export tmp
+    unset temp && export temp
+    unset tmp  && export tmp
 
     # Fix Ansible SSH connection issues (https://github.com/geerlingguy/JJG-Ansible-Windows/issues/6)
     ANSIBLE_SSH_ARGS='-o ControlMaster=no'
@@ -71,3 +75,10 @@ if [ "${OSTYPE}" = "msys" ]; then
     export PYTHONIOENCODING
 fi
 
+##
+## Import local file if present
+##
+
+if [ -r ~/.zshenv.local ]; then
+    . ~/.zshenv.local
+fi
