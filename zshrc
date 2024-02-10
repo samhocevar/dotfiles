@@ -55,7 +55,7 @@ export HISTORY=256
 export HISTSIZE=2048
 export SAVEHIST=2048
 
-setopt   share_history # Instead of append_history
+setopt   append_history # Instead of share_history
 setopt   bang_hist
 setopt   csh_junkie_history
 unsetopt extended_history
