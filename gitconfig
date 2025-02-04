@@ -1,0 +1,57 @@
+##
+## This file is managed globally by update-dotfiles and may be overwritten
+## Local configuration should be stored in .gitconfig-local
+## See https://github.com/samhocevar/dotfiles for more information
+##
+## Copyright © 1998–2025 Sam Hocevar <sam@hocevar.net>
+##
+## This file is free software. It comes without any warranty, to
+## the extent permitted by applicable law. You can redistribute it
+## and/or modify it under the terms of the Do What The Fuck You Want
+## to Public License, Version 2, as published by the WTFPL Task Force.
+## See http://www.wtfpl.net/ for more details.
+##
+
+# Enforce sane Unicode behaviour everywhere
+[i18n]
+	logoutputencoding = UTF-8
+
+# Use the sensible default of automatically updating submodules
+[submodule]
+	recurse = true
+
+# Use a brighter color scheme
+[color]
+	diff = auto
+	status = auto
+	branch = auto
+	log = auto
+	ui = true
+	pager = true
+
+[color "diff"]
+	new = bold cyan
+	old = bold red
+	frag = bold yellow
+	meta = bold green
+	commit = bold magenta
+
+[color "log"]
+	name = bold red
+
+[color "status"]
+	header = bold blue
+	added  = green
+	changed = bold red
+	untracked = bold yellow
+
+# Default LFS hook
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+
+# Include local configuration if present
+[include]
+	path = .gitconfig-local

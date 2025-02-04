@@ -13,7 +13,7 @@ case "$(uname)" in
         esac
 esac
 
-for f in vimrc zshenv zshrc; do
+for f in gitconfig vimrc zshenv zshrc; do
     SRC="${DOTFILES}/${f}" 
     DST="${HOME}/.${f}"
     if [ -L "${DST}" -o ! -e "${DST}" ]; then
