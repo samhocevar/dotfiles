@@ -268,8 +268,8 @@ function genpass() {
     CHARS='a-zA-Z0-9\n'
     COUNT=30
     if [ "$1" = '-h' ]; then CHARS='!-~\n'; shift; fi
-    if [ -n "$1" -a "$1" -gt 5 -a "$1" -lt 200 ]; then COUNT="$1"; shift; fi
-    tr -dc "${CHARS}" < /dev/urandom | grep '^.\{'"${COUNT}"'\}$' | head -n 10
+    if [ -n "$1" -a "$1" -gt 5 -a "$1" -lt 500 ]; then COUNT="$1"; shift; fi
+    tr -dc "${CHARS}" < /dev/urandom | sed -ne 's/^\(.\{'"${COUNT}"'\}\).*/\1/p' | head -n 10
 }
 
 ##
