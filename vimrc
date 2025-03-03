@@ -30,6 +30,10 @@ set nofixendofline
 "" Syntax stuff
 ""
 
+" Bind9 configuration
+au BufRead,BufNewFile /etc/bind/named.conf* set ft=named
+au BufRead,BufNewFile /etc/bind/zones/* set ft=bindzone
+
 " XAML is basically XML, and so are MSBuild .props and .targets files
 au BufNewFile,BufRead *.xaml setf xml
 au BufNewFile,BufRead *.props,*.targets setf xml
