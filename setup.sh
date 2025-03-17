@@ -24,3 +24,7 @@ for f in gitconfig vimrc zshenv zshrc; do
     fi
 done
 
+# Sanity checks
+if [ -f "${HOME}/.gitconfig-local" ]; then
+    echo "[!!] Found .gitconfig-local file in HOME; this should be .gitconfig.local"
+fi

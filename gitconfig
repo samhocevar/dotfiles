@@ -1,6 +1,6 @@
 ##
 ## This file is managed globally by update-dotfiles and may be overwritten
-## Local configuration should be stored in .gitconfig-local
+## Local configuration should be stored in .gitconfig.local
 ## See https://github.com/samhocevar/dotfiles for more information
 ##
 ## Copyright © 1998–2025 Sam Hocevar <sam@hocevar.net>
@@ -54,4 +54,4 @@
 
 # Include local configuration if present
 [include]
-	path = .gitconfig-local
+	path = .gitconfig.local
