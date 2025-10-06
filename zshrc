@@ -124,7 +124,7 @@ bindkey '^[[6~' history-search-forward  # PgDn
 
 # Full color prompt
 function set_prompt() {
-    # Pick up an emoji to indicate the system; helpful on WSL where the
+    # Pick an emoji to indicate the system; helpful on WSL where the
     # same machine runs both a Windows and a Linux kernel.
     case "$(uname)" in
         MINGW*|MSYS*) local logo='🪟' ;;
@@ -134,13 +134,36 @@ function set_prompt() {
         SunOS)  local logo='🌞' ;;
         *)      local logo=' ' ;;
     esac
+    logo="%2{${logo}%}"
 
     # This is how we would activate a modern style prompt
     #autoload -Uz promptinit
     #promptinit
     #prompt fire
 
-    export PS1="%{%B%F{cyan}%}%D{%d/%m} %T %{%F{red}%}%n%{%F{yellow}%}@%{%F{white}%}%m%{%F{yellow}%}${logo}%{%F{green}%}%~%{%F{yellow}%}%#%{%f%b%} "
+    local newline=$'\n'
+    local cwd="%{%F{green}%}%~"
+    local hash="%{%F{yellow}%}%#"
+
+    # My old style prompt
+    #local tmp="%{%B%F{cyan}%}%D{%d/%m %H:%M }"
+    #tmp="${tmp}%{%F{red}%}%n%{%F{yellow}%}@%{%F{202}%}%m${logo}"
+    #tmp="${tmp}${cwd}${hash}"
+
+    # New style prompt, when full Unicode mode is supported
+    # Color for text, date, machine, user
+    local tc=231; dc=203; local mc=69; local uc=208
+    # Glyphs for left, middle, right separators
+    #local lg='🯩'; local mg='🯫'; local rg='🯫'
+    local lg='▐'; local mg='▌'; local rg='▌'
+
+    local tmp="%{%F{${dc}}%}${lg}%{%B%F{${tc}}%K{${dc}}%}%D{%d/%m %H:%M}"
+    tmp="${tmp}%{%F{${dc}}%K{${mc}}%}${mg}%{%K{${mc}}%F{${tc}}%}${logo}%m"
+    tmp="${tmp}%{%F{${mc}}%K{${uc}}%}${mg}%{%F{${tc}}%}%2{👤%}%n"
+    tmp="${tmp}%{%F{${uc}}%k%}${rg}%{%f%}"
+    tmp="${tmp}${cwd}${hash}%{%f%b%k%} "
+
+    export PS1="${tmp}"
     export PS2='> '
 }
 
