@@ -152,7 +152,7 @@ function set_prompt() {
 
     # New style prompt, when full Unicode mode is supported
     # Color for text, date, machine, user
-    local tc=231; dc=203; local mc=69; local uc=208
+    local tc=231; dc=90; local mc=18; local uc=88
     # Glyphs for left, middle, right separators
     #local lg='🯩'; local mg='🯫'; local rg='🯫'
     local lg='▐'; local mg='▌'; local rg='▌'
